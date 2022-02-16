@@ -9,7 +9,7 @@ class RelayBoard:
         self.device_address = device_address
         self.device_bus = device_bus
 
-        self.bus = smbus.SMBUS(self.device_bus)
+        self.bus = smbus.SMBus(self.device_bus)
         self.relay_list = list()
         for i in range(4):
             self.relay_list.append(Relay(i))
