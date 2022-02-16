@@ -1,7 +1,7 @@
 import time
 import smbus
 
-from Relay import Relay
+from . Relay import Relay
 
 
 class RelayBoard:
