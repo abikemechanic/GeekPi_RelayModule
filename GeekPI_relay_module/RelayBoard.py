@@ -11,7 +11,7 @@ class RelayBoard:
 
         self.bus = smbus.SMBus(self.device_bus)
         self.relay_list = list()
-        for i in range(4):
+        for i in range(1, 5):
             self.relay_list.append(Relay(i))
 
     def toggle(self, relay_number):
@@ -22,11 +22,9 @@ class RelayBoard:
             self.bus.write_byte_data(self.device_address, relay_number, 0xFF)
 
     def turn_on(self, relay_id):
-        print(f'{self.device_address}, {relay_id}')
         self.bus.write_byte_data(self.device_address, relay_id, 0xFF)
 
     def turn_off(self, relay_id):
-        print(f'{self.device_address}, {relay_id}')
         self.bus.write_byte_data(self.device_address, relay_id, 0x00)
 
     def get_state(self, relay_number=None):
@@ -58,3 +56,5 @@ class RelayBoard:
                 self.turn_on(relay_number)
             elif state in [0, 'off']:
                 self.turn_off(relay_number)
+
+        print(state)
