@@ -23,9 +23,11 @@ class RelayBoard:
 
     def turn_on(self, relay_id):
         self.bus.write_byte_data(self.device_address, relay_id, 0xFF)
+        self.relay_list[relay_id].state = 1
 
     def turn_off(self, relay_id):
         self.bus.write_byte_data(self.device_address, relay_id, 0x00)
+        self.relay_list[relay_id].state = 0
 
     def get_state(self, relay_number=None):
         if relay_number:
@@ -41,11 +43,10 @@ class RelayBoard:
         :return: Nothing
         """
 
-        print(f'state type: {type(state)}')
-
         if isinstance(state, list):
             for i in range(1, 5):
                 self.set_state(state[i-1], i)
+            return
 
         if isinstance(state, str):
             state = state.lower()
