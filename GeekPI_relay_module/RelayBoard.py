@@ -44,8 +44,8 @@ class RelayBoard:
         print(f'state type: {type(state)}')
 
         if isinstance(state, list):
-            for i in range(4):
-                self.set_state(i, state[i])
+            for i in range(1, 5):
+                self.set_state(state[i], i)
 
         if isinstance(state, str):
             state = state.lower()
