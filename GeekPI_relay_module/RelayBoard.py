@@ -21,6 +21,12 @@ class RelayBoard:
         else:
             self.bus.write_byte_data(self.device_address, relay_number, 0xFF)
 
+    def turn_on(self, relay_id):
+        self.bus.write_byte_data(self.device_address, relay_id, 0xFF)
+
+    def turn_off(self, relay_id):
+        self.bus.write_byte_data(self.device_address, relay_id, 0x00)
+
     def get_state(self, relay_number=None):
         if relay_number:
             return self.relay_list[relay_number].state
@@ -35,17 +41,18 @@ class RelayBoard:
         :return: Nothing
         """
 
-        if type(state) is str():
+        if type(state) == list():
+            for i in range(4):
+                self.set_state(i, state[i])
+
+        if type(state) in {str(), int()}:
             state = state.lower()
 
         if state not in [1, 0, 'on', 'off']:
             raise ValueError('The value of state must be one of (1, 0, on, off)')
 
-        if type(state) == list():
-            for i in range(4):
-                self.relay_list[i].state = state[i]
-
         elif type(relay_number) == int():
-            if self.get_state() != state:
-                self.toggle(relay_number)
-                self.relay_list[relay_number].state = state
+            if state in [1, 'on']:
+                self.turn_on(relay_number)
+            elif state in [0, 'off']:
+                self.turn_off(relay_number)
