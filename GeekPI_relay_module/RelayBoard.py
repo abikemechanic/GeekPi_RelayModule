@@ -43,6 +43,8 @@ class RelayBoard:
         :return: Nothing
         """
 
+        print(f'state type: {type(state)}')
+
         if type(state) == list():
             for i in range(4):
                 self.set_state(i, state[i])
