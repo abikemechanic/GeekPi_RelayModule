@@ -49,12 +49,10 @@ class RelayBoard:
 
         if isinstance(state, str):
             state = state.lower()
-        else:
-            if state not in [1, 0, 'on', 'off']:
-                raise ValueError('The value of state must be one of (1, 0, on, off)')
-            if state in [1, 'on']:
-                self.turn_on(relay_number)
-            elif state in [0, 'off']:
-                self.turn_off(relay_number)
 
-        print(state)
+        if state not in [1, 0, 'on', 'off']:
+            raise ValueError('The value of state must be one of (1, 0, on, off)')
+        if state in [1, 'on']:
+            self.turn_on(relay_number)
+        elif state in [0, 'off']:
+            self.turn_off(relay_number)
