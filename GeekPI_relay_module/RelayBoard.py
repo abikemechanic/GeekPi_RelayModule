@@ -45,7 +45,7 @@ class RelayBoard:
 
         if isinstance(state, list):
             for i in range(1, 5):
-                self.set_state(state[i], i)
+                self.set_state(state[i-1], i)
 
         if isinstance(state, str):
             state = state.lower()
