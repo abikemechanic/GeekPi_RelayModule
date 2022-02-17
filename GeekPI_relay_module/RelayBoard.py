@@ -15,16 +15,18 @@ class RelayBoard:
             self.relay_list.append(Relay(i))
 
     def toggle(self, relay_number):
-        state = self.relay_list[relay_number]
+        state = self.relay_list[relay_number].state
         if state:
             self.bus.write_byte_data(self.device_address, relay_number, 0x00)
         else:
             self.bus.write_byte_data(self.device_address, relay_number, 0xFF)
 
     def turn_on(self, relay_id):
+        print(f'{self.device_address}, {relay_id}')
         self.bus.write_byte_data(self.device_address, relay_id, 0xFF)
 
     def turn_off(self, relay_id):
+        print(f'{self.device_address}, {relay_id}')
         self.bus.write_byte_data(self.device_address, relay_id, 0x00)
 
     def get_state(self, relay_number=None):
