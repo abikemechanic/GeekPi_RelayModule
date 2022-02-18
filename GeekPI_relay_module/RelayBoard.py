@@ -11,15 +11,23 @@ class RelayBoard:
 
         self.bus = smbus.SMBus(self.device_bus)
         self.relay_list = list()
-        for i in range(4):
+        for i in range(1, 5):
             self.relay_list.append(Relay(i))
 
     def toggle(self, relay_number):
-        state = self.relay_list[relay_number]
+        state = self.relay_list[relay_number].state
         if state:
             self.bus.write_byte_data(self.device_address, relay_number, 0x00)
         else:
             self.bus.write_byte_data(self.device_address, relay_number, 0xFF)
+
+    def turn_on(self, relay_id):
+        self.bus.write_byte_data(self.device_address, relay_id, 0xFF)
+        self.relay_list[relay_id].state = 1
+
+    def turn_off(self, relay_id):
+        self.bus.write_byte_data(self.device_address, relay_id, 0x00)
+        self.relay_list[relay_id].state = 0
 
     def get_state(self, relay_number=None):
         if relay_number:
@@ -35,17 +43,17 @@ class RelayBoard:
         :return: Nothing
         """
 
-        if type(state) is str():
+        if isinstance(state, list):
+            for i in range(1, 5):
+                self.set_state(state[i-1], i)
+            return
+
+        if isinstance(state, str):
             state = state.lower()
 
         if state not in [1, 0, 'on', 'off']:
             raise ValueError('The value of state must be one of (1, 0, on, off)')
-
-        if type(state) == list():
-            for i in range(4):
-                self.relay_list[i].state = state[i]
-
-        elif type(relay_number) == int():
-            if self.get_state() != state:
-                self.toggle(relay_number)
-                self.relay_list[relay_number].state = state
+        if state in [1, 'on']:
+            self.turn_on(relay_number)
+        elif state in [0, 'off']:
+            self.turn_off(relay_number)
