@@ -26,14 +26,14 @@ class RelayBoard:
             relay_id = relay_id.relay_number
 
         self.bus.write_byte_data(self.device_address, relay_id, 0xFF)
-        self.relay_list[relay_id].state = 1
+        self.relay_list[relay_id - 1].state = 1
 
     def turn_off(self, relay_id):
         if isinstance(relay_id, Relay):
             relay_id = relay_id.relay_number
 
         self.bus.write_byte_data(self.device_address, relay_id, 0x00)
-        self.relay_list[relay_id].state = 0
+        self.relay_list[relay_id - 1].state = 0
 
     def get_state(self, relay_number=None):
         if relay_number:
