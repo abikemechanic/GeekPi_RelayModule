@@ -22,10 +22,16 @@ class RelayBoard:
             self.bus.write_byte_data(self.device_address, relay_number, 0xFF)
 
     def turn_on(self, relay_id):
+        if isinstance(relay_id, Relay):
+            relay_id = relay_id.relay_number
+
         self.bus.write_byte_data(self.device_address, relay_id, 0xFF)
         self.relay_list[relay_id].state = 1
 
     def turn_off(self, relay_id):
+        if isinstance(relay_id, Relay):
+            relay_id = relay_id.relay_number
+
         self.bus.write_byte_data(self.device_address, relay_id, 0x00)
         self.relay_list[relay_id].state = 0
 
