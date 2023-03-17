@@ -1,0 +1,24 @@
+{
+  "relays": [
+    {
+      "name": "relay_1",
+      "subscribe_topic": "home/relays/1"
+    },
+    {
+      "name": "relay_2",
+      "subscribe_topic": "home/relays/2"
+    },
+    {
+      "name": "relay_3",
+      "subscribe_topic": "home/relays/3"
+    },
+    {
+      "name": "relay_4",
+      "subscribe_topic": "home/relays/4"
+    }
+  ],
+  "mqtt": {
+    "port": 8888,
+    "host": "192.168.1.13"
+  }
+}
